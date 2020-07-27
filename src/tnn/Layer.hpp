@@ -34,6 +34,8 @@ Layer::~Layer()
 {
     for(auto& n : neurons)
         n->~Neuron();
+    delete prev;
+    delete next;
 }
 
 // Add new neuron

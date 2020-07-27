@@ -6,7 +6,7 @@
 int main()
 {
     Network net;
-    //net.addLayer();
+    net.AddLayer(8);
     std::cout << "Hello world!" << std::endl;
     return 0;
 }
