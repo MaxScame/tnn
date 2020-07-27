@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+#define IODefVal 0.f // I/O default value
+#define WDefVal 1.f // Weight default value
 
 class Neuron
 {
@@ -10,6 +12,7 @@ private:
     std::vector<double> output;
 
 public:
+    Neuron();
     Neuron(size_t in,size_t out);
     ~Neuron();
 
@@ -24,7 +27,12 @@ public:
 };
 
 
-Neuron::Neuron(size_t in,size_t out) : input(in, 0), weight(in, 1), output(out, 0) {}
+Neuron::Neuron()
+{
+}
+
+// Ctor with init
+Neuron::Neuron(size_t in,size_t out) : input(in, IODefVal), weight(in, WDefVal), output(out, IODefVal) {}
 
 Neuron::~Neuron()
 {
@@ -33,27 +41,33 @@ Neuron::~Neuron()
     output.clear();
 }
 
+// Get count of input for one neuron
 size_t Neuron::getInputCount()
 {
     return input.size();
 }
 
+// (Re-)Set input count with default init
 void Neuron::setInputCount(size_t size)
 {
-    input.resize(size);
+    input.resize(size, IODefVal);
+    weight.resize(size, WDefVal);
 }
 
+// Get pair of input and weight values
 std::pair<double, double> Neuron::getInput(size_t index)
 {
     return std::make_pair(input.at(index), weight.at(index));
 }
 
+// Get output count
 size_t Neuron::getOutputCount()
 {
     return output.size();
 }
 
+// Set output count to *size* with default init
 void Neuron::setOutputCount(size_t size)
 {
-    output.resize(size);
+    output.resize(size, IODefVal);
 }
