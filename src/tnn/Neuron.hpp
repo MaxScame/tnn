@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+#include "ActivationFunc.hpp"
+
 #define IODefVal 0.f // I/O default value
 #define WDefVal 1.f // Weight default value
 
@@ -10,7 +12,7 @@ private:
     std::vector<double> input;
     std::vector<double> weight;
     std::vector<double> output;
-
+    double (*func)(double, double);
 public:
     Neuron();
     Neuron(size_t in,size_t out);
@@ -24,6 +26,8 @@ public:
     // Output func
     size_t getOutputCount();
     void setOutputCount(size_t size);
+
+    void SetActFunc(double (*ActFunc)(double, double));
 };
 
 
@@ -70,4 +74,10 @@ size_t Neuron::getOutputCount()
 void Neuron::setOutputCount(size_t size)
 {
     output.resize(size, IODefVal);
+}
+
+// Setter for Activation function
+void Neuron::SetActFunc(double (*ActFunc)(double, double))
+{
+    func = ActFunc;
 }

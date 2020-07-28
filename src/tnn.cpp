@@ -6,7 +6,9 @@
 int main()
 {
     Network net;
-    net.AddLayer(8);
+    net.AddLayer(8, SIGMOID);
+    net.AddLayer(4, SIGMOID);
+    net.AddLayer(2, TANH);
     std::cout << "Hello world!" << std::endl;
     return 0;
 }
