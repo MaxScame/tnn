@@ -27,6 +27,14 @@ public:
     void RemoveNeuron(Neuron& n);
 
     void InputSet(size_t i_count);
+    void OutputSet(size_t o_count);
+
+    size_t NeuronCount();
+
+    void SetInputData(std::vector<double> Inputs);
+    std::vector<double> GetOutputData();
+
+    void Calculate(double arg);
 };
 
 // Ctor with creating *n_count* neurons
@@ -79,6 +87,13 @@ void Layer::InputSet(size_t i_count)
     }
 }
 
+// Set output count for neurons in layer
+void Layer::OutputSet(size_t o_count)
+{
+    for(auto& n : neurons)
+        n->setOutputCount(o_count);
+}
+
 // Setter for previous layer
 void Layer::SetPrevLayer(Layer* l)
 {
@@ -107,4 +122,30 @@ void Layer::SetActFunc(double (*ActFunc)(double, double))
 {
     for(auto& n : neurons)
         n->SetActFunc(ActFunc);
+}
+
+// Return count of neurons in layer
+size_t Layer::NeuronCount()
+{
+    return neurons.size();
+}
+
+void Layer::SetInputData(std::vector<double> Inputs)
+{
+    for(auto& n : neurons)
+        n->SetInputs(Inputs);
+}
+
+std::vector<double> Layer::GetOutputData()
+{
+    std::vector<double> layer_output;
+    for(auto& n : neurons)
+            layer_output.push_back(n->GetOutput());
+    return layer_output;
+}
+
+void Layer::Calculate(double arg = CoeffDefVal)
+{
+    for(auto& n : neurons)
+        n->Calculate(arg);
 }

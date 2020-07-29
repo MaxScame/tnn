@@ -5,6 +5,7 @@
 
 #define IODefVal 0.f // I/O default value
 #define WDefVal 1.f // Weight default value
+#define CoeffDefVal -1.f // Activation function coefficient default value
 
 class Neuron
 {
@@ -22,12 +23,15 @@ public:
     size_t getInputCount();
     void setInputCount(size_t size);
     std::pair<double, double> getInput(size_t index);
+    void SetInputs(std::vector<double>& Inputs);
+    double GetOutput();
 
     // Output func
     size_t getOutputCount();
     void setOutputCount(size_t size);
 
     void SetActFunc(double (*ActFunc)(double, double));
+    void Calculate(double arg);
 };
 
 
@@ -80,4 +84,29 @@ void Neuron::setOutputCount(size_t size)
 void Neuron::SetActFunc(double (*ActFunc)(double, double))
 {
     func = ActFunc;
+}
+
+// Calculate func
+void Neuron::Calculate(double arg = CoeffDefVal)
+{
+    double Z = 0.f;
+    double Out = -1.f;
+    for(size_t i = 0; i < input.size(); i++)
+        Z += weight[i] * input[i]; // Sum of Wi*Xi
+    Out = func(Z, arg); // Result of activation func
+    for(auto& o : output)
+        o = Out;
+}
+
+void Neuron::SetInputs(std::vector<double>& Inputs)
+{
+    for(size_t i = 0; i < input.size(); i++)
+        input[i] = Inputs[i];
+}
+
+// Get calculated output
+// @return Return only first element, because all elements are equal
+double Neuron::GetOutput()
+{
+    return output.front();
 }
