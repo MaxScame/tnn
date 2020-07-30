@@ -26,12 +26,15 @@ public:
 
     void RemoveNeuron(Neuron& n);
 
+    size_t GetInputCount();
+
     void InputSet(size_t i_count);
     void OutputSet(size_t o_count);
 
     size_t NeuronCount();
 
     void SetInputData(std::vector<double> Inputs);
+    void SetWeights(std::vector<double> Inputs);
     std::vector<double> GetOutputData();
 
     void Calculate(double arg);
@@ -142,6 +145,23 @@ std::vector<double> Layer::GetOutputData()
     for(auto& n : neurons)
             layer_output.push_back(n->GetOutput());
     return layer_output;
+}
+
+size_t Layer::GetInputCount()
+{
+    return neurons.at(0)->getInputCount();
+}
+
+void Layer::SetWeights(std::vector<double> Weights)
+{
+    size_t delim = neurons.at(0)->getInputCount();
+    for(size_t i = 0; i < neurons.size(); i++)
+    {
+        std::vector<double>::const_iterator first = Weights.begin() + delim*i;
+        std::vector<double>::const_iterator last = Weights.begin() + delim*i + delim;
+        std::vector<double> WeightsForSingleNeuron(first, last);
+        neurons.at(i)->SetWeights(WeightsForSingleNeuron);
+    }
 }
 
 void Layer::Calculate(double arg = CoeffDefVal)

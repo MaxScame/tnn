@@ -24,6 +24,7 @@ public:
     void setInputCount(size_t size);
     std::pair<double, double> getInput(size_t index);
     void SetInputs(std::vector<double>& Inputs);
+    void SetWeights(std::vector<double>& Weights);
     double GetOutput();
 
     // Output func
@@ -102,6 +103,12 @@ void Neuron::SetInputs(std::vector<double>& Inputs)
 {
     for(size_t i = 0; i < input.size(); i++)
         input[i] = Inputs[i];
+}
+
+void Neuron::SetWeights(std::vector<double>& Weigths)
+{
+    for(size_t i = 0; i < weight.size(); i++)
+        weight[i] = Weigths[i];
 }
 
 // Get calculated output
